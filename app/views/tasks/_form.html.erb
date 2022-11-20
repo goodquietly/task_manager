@@ -1,8 +1,13 @@
+<div>  
   <%= form_with model: task, data: {turbo: false} do |form| %>
-    <%= form.hidden_field :user_id%>
+    <%= form.hidden_field :user_id %>
 
-    <p><%= form.label :title, 'Наименование задачи' %></p>
-    <p><%= form.text_area :title, rows: 5, class: '' %></p>
-
-    <p class=""><%= form.submit 'Сохранить', class: '' %></p>
+    <div class="d-grid gap-2 col-6 mx-auto my-3 text-center">
+        <%= form.label :title, 'Добавить задачу', class: 'form-label', for: 'exampleFormControlTextarea1' %>
+        <%= form.text_area :title, rows: 3, class: 'form-control', id: 'exampleFormControlTextarea1' %>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto mb-5">
+      <%= form.submit 'Сохранить', class: 'btn btn-secondary' %>
+    </div>  
   <% end %>
+</div>
