@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 
 <head>
   <title>TaskManager</title>
@@ -11,23 +11,23 @@
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 </head>
 
-<body>
-  <% if user_signed_in? %>
-    Logged in as <strong><%= current_user.email %></strong>.
-    <%= link_to 'Edit profile', edit_user_registration_path %> |
-    <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> |
-    <%= link_to "Login", new_user_session_path %>
-  <% end %>
+<body class="d-flex flex-column h-100">
 
-  <% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
-  <% elsif alert %>
-    <p class="alert alert-danger"><%= alert %></p>
-  <% end %>
+  <%= render "partial/navbar" %>
+  
+  <main class="flex-shrink-0 mt-5">
+    <div class="container mt-3">
 
-  <%= yield %>
+      <%= render "partial/alert" %>    
+      <%= yield %>
+      
+    </div>
+  </main>
+  <footer class="footer mt-auto py-3 bg-dark">
+      <div class="container">
+        <span class="text-light">TaskManager</span>
+      </div>
+    </footer>  
 </body>
 
 </html>
