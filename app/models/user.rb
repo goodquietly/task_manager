@@ -5,5 +5,5 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 35 }
   validates :surname, presence: true, length: { maximum: 35 }
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 end
