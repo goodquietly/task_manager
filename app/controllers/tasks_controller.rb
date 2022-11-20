@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: %i[show edit update destroy update_status]
 
   def index
     @tasks = Task.all
@@ -36,6 +36,8 @@ class TasksController < ApplicationController
   end
 
   def update
+    return redirect_to task_path, alert: 'Задача выполнена, eё нельзя изменить.' if @task.finished?
+
     task_params = params.require(:task).permit(:title, :user_id)
 
     if @task.update(task_params)
@@ -46,6 +48,18 @@ class TasksController < ApplicationController
 
       render :edit
     end
+  end
+
+  def update_status
+    return redirect_to user_path, alert: 'Задача уже выполнена!' if @task.finished?
+
+    if @task.created?
+      @task.started!
+    else
+      @task.finished!
+    end
+
+    redirect_to user_path, notice: 'Статус задачи изменен!'
   end
 
   def destroy

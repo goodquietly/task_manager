@@ -6,4 +6,8 @@ class User < ApplicationRecord
   validates :surname, presence: true, length: { maximum: 35 }
 
   has_many :tasks, dependent: :destroy
+
+  def full_name
+    "#{name} #{surname}"
+  end
 end

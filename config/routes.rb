@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
   devise_scope :user do
-    # Redirests signing out users back to sign-in
     get 'users', to: 'devise/sessions#new'
     delete 'users', to: 'devise/sessions#new'
   end
 
   devise_for :users
   resources :users, only: %i[show]
-  resources :tasks
+  resources :tasks do
+    member do
+      put 'update_status'
+    end
+  end
 
   root 'tasks#index'
 end
