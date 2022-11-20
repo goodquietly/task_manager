@@ -1,0 +1,5 @@
+<% @tasks.each.with_index(1) do |task, index| %>
+  <p><%= index %>. <%= task.title %>, статус: <%= task.status %><p>
+<% end %>
+
+<%= render "tasks/form", task: @task %>

@@ -1,0 +1,8 @@
+  <%= form_with model: task, data: {turbo: false} do |form| %>
+    <%= form.hidden_field :user_id%>
+
+    <p><%= form.label :title, 'Наименование задачи' %></p>
+    <p><%= form.text_area :title, rows: 5, class: '' %></p>
+
+    <p class=""><%= form.submit 'Сохранить', class: '' %></p>
+  <% end %>

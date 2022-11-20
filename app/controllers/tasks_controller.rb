@@ -1,26 +1,23 @@
 class TasksController < ApplicationController
-  # skip_before_action :authenticate_user!, only: %i[show edit update destroy index]
+  before_action :set_task, only: %i[show edit update destroy]
 
-  # GET /tasks
   def index
     @tasks = Task.all
+    @users = User.all
   end
 
-  # GET /tasks/1
   def show
-    @task = Task.find(params[:id])
+    @user = @task.user
+    @tasks = Task.where(user_id: @user.id)
   end
 
-  # GET /tasks/new
   def new
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
     @task = Task.new(user: @user)
   end
 
-  # GET /tasks/1/edit
   def edit; end
 
-  # POST /tasks
   def create
     task_params = params.require(:task).permit(:title, :user_id)
 
@@ -30,7 +27,7 @@ class TasksController < ApplicationController
 
     if @task.save
 
-      redirect_to task_path(@task), notice: 'Task was successfully created!'
+      redirect_to task_path(@task), notice: 'Задача успешно создана!'
     else
       flash.now[:alert] = 'Вы неправильно заполнили поле Title'
 
@@ -38,13 +35,12 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1
   def update
     task_params = params.require(:task).permit(:title, :user_id)
 
     if @task.update(task_params)
 
-      redirect_to task_path(@task), notice: 'Task was successfully updated!'
+      redirect_to task_path(@task), notice: 'Задача успешно обновлена!'
     else
       flash.now[:alert] = 'Вы неправильно заполнили поле Title'
 
@@ -52,10 +48,15 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1
   def destroy
     @task.destroy
 
-    redirect_to root, notice: 'Task was successfully destroyed.'
+    redirect_to root_path, notice: 'Задача успешно удалена.'
+  end
+
+  private
+
+  def set_task
+    @task = Task.find(params[:id])
   end
 end
