@@ -2,12 +2,12 @@
   <%= form_with model: task, data: {turbo: false} do |form| %>
     <%= form.hidden_field :user_id %>
 
-    <div class="d-grid gap-2 col-6 mx-auto my-3 text-center">
-        <%= form.label :title, 'Добавить задачу', class: 'form-label', for: 'exampleFormControlTextarea1' %>
+    <div class="d-grid gap-2 col-8 mx-auto my-3 text-center">
+        <%= form.label :title, 'Add task', class: 'form-label', for: 'exampleFormControlTextarea1' %>
         <%= form.text_area :title, rows: 3, class: 'form-control', id: 'exampleFormControlTextarea1' %>
     </div>
-    <div class="d-grid gap-2 col-6 mx-auto mb-5">
-      <%= form.submit 'Сохранить', class: 'btn btn-secondary' %>
+    <div class="d-grid gap-2 col-8 mx-auto mb-5">
+      <%= form.submit 'Save', class: 'btn btn-secondary' %>
     </div>  
   <% end %>
 </div>
