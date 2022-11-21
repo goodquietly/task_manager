@@ -1,12 +1,14 @@
-<h1>Tasks</h1>
+<h1 class='text-center mt-5'>Company team</h1>
 
-<div>
+<div class='d-flex align-content-center flex-wrap'>
   <% @users.each do |user| %>
-    <p>
-      <%= link_to user.email, user %>
-    </p>
+    <div class="ms-auto me-auto p-2">
+      <%= render "users/user", user: user %>
+    </div>
   <% end %>
 </div>
+
+<h1 class='text-center mb-5'>All tasks</h1>
 
 <div>
   <table class="table table-bordered">
@@ -15,6 +17,7 @@
       <th scope="col">Executor</th>
       <th scope="col">Created</th>
       <th scope="col">Task</th>
+      <th scope="col">Task creator</th>
       <th scope="col">Task status</th>
       <th scope="col">Updated</th>
     </tr>
@@ -27,6 +30,7 @@
         class: 'link-success' %></th>
       <td><%= l(task.created_at, format: :short) %></td>
       <td><%= link_to task.title, task_path(task), class: 'link-success' %></td>
+      <td><%= task.author.full_name %></td>
       <td><%= task.status.upcase %></td>
       <td><%= l(task.updated_at, format: :short) %></td>
     </tr>
