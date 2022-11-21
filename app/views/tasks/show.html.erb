@@ -1,8 +1,9 @@
-<%= render @task %>
+<div class="my-5 d-flex justify-content-center text-center">
+  <div>
 
-<div>
-  <%= link_to "Edit this task", edit_task_path(@task) %> |
-  <%= link_to "Back to tasks", tasks_path %>
+    <%= render @task %>
 
-  <%= button_to "Destroy this task", @task, form: { data: { turbo_confirm: 'Are you sure?' } }, method: :delete %>
+    <%= button_to "Edit this task", edit_task_path(@task), class: 'btn btn-info my-3', method: :get %>
+    <%= button_to "Back to tasks", tasks_path, class: 'btn btn-info', method: :get %>
+  </div>
 </div>

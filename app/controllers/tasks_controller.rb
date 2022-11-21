@@ -41,6 +41,7 @@ class TasksController < ApplicationController
     task_params = params.require(:task).permit(:title, :user_id)
 
     if @task.update(task_params)
+      @task.created!
 
       redirect_to task_path(@task), notice: 'Задача успешно обновлена!'
     else

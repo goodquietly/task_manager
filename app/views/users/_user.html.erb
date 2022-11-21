@@ -1,9 +1,10 @@
-  <a href=<%= user_path(user) %> class="list-group-item list-group-item-action active" aria-current="true">
-    <div class="card d-grid gap-2 text-center row">
-      <%= letter_avatar_tag(user.surname, 250, class: 'card-img-top p-0') %>
-      <div class="card-body">
-        <h5 class="card-title"><%= user.full_name %></h5>
-        <p class="card-text">Email: <%= user.email %></p>
-      </div>
+<a href=<%= user_path(user) %> class="list-group-item list-group-item-action active" 
+   aria-current="true" title="Add task to <%= user.full_name %>">
+  <div class="card d-grid gap-2 text-center row">
+    <%= letter_avatar_tag(user.surname, 250, class: 'card-img-top p-0') %>
+    <div class="card-body">
+      <h5 class="card-title"><%= user.full_name %></h5>
+      <p class="card-text">Email: <%= user.email %></p>
     </div>
-    </a>
+  </div>
+</a>

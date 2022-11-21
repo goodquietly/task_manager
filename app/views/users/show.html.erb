@@ -15,30 +15,26 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Tasks</th>
+      <th scope="col">Task creator</th>      
       <th scope="col">Task status</th>
       <th scope="col">Update status</th>
     </tr>
   </thead>
   <tbody>
 
-<% @tasks.each.with_index(1) do |task, index| %> 
+  <% @tasks.each.with_index(1) do |task, index| %> 
     <tr class="table-<%= table_tr_color(task.status) %>">
       <th scope="row"><%= index %></th>
       <td><%= link_to task.title, task_path(task), class: 'link-success' %></td>
+      <td><%= link_to task.author.full_name, user_path(task.author), class: 'link-dark' %></td>
       <td><%= task.status.upcase %></td>
       <td>
 
-        <% if task.created? %>
-          <%= button_to 'Take to work', update_status_task_path(task), class: 'btn btn-info btn-sm', method: :put %>
-        <% elsif task.started? %>
-          <%= button_to 'Complete task', update_status_task_path(task), class: 'btn btn-success btn-sm', method: :put %>
-        <% elsif task.finished? %>
-          <%= button_to 'Completed', '#', class: 'btn btn-sm btn-success', disabled: true, method: :put %>  
-        <% end %> 
+        <%= render 'partial/update_status', task: task %>
 
       </td>
     </tr>
-    <% end %>
+  <% end %>
 
   </tbody>
 </table>

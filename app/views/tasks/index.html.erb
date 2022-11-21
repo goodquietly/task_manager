@@ -1,41 +1,42 @@
-<h1 class='text-center mt-5'>Company team</h1>
-
+<h1 class='text-center my-5'>Company team</h1>
 <div class='d-flex align-content-center flex-wrap'>
+
   <% @users.each do |user| %>
     <div class="ms-auto me-auto p-2">
       <%= render "users/user", user: user %>
     </div>
   <% end %>
+
 </div>
 
-<h1 class='text-center mb-5'>All tasks</h1>
+<h1 class='text-center my-5'>All tasks</h1>
 
 <div>
   <table class="table table-bordered">
-  <thead class='table-dark'>
-    <tr>
-      <th scope="col">Executor</th>
-      <th scope="col">Created</th>
-      <th scope="col">Task</th>
-      <th scope="col">Task creator</th>
-      <th scope="col">Task status</th>
-      <th scope="col">Updated</th>
-    </tr>
-  </thead>
-  <tbody>
+    <thead class='table-dark'>
+      <tr>
+        <th scope="col">Executor</th>
+        <th scope="col">Created</th>
+        <th scope="col">Task</th>
+        <th scope="col">Task creator</th>
+        <th scope="col">Task status</th>
+        <th scope="col">Updated</th>
+      </tr>
+    </thead>
+    <tbody>
 
-  <% @tasks.each do |task| %> 
-    <tr class="table-<%= table_tr_color(task.status) %>">
-      <th scope="row"><%= link_to task.user.full_name, user_path(task.user), 
-        class: 'link-success' %></th>
-      <td><%= l(task.created_at, format: :short) %></td>
-      <td><%= link_to task.title, task_path(task), class: 'link-success' %></td>
-      <td><%= task.author.full_name %></td>
-      <td><%= task.status.upcase %></td>
-      <td><%= l(task.updated_at, format: :short) %></td>
-    </tr>
-    <% end %>
+      <% @tasks.each do |task| %> 
+        <tr class="table-<%= table_tr_color(task.status) %>">
+          <th scope="row"><%= link_to task.user.full_name, user_path(task.user), 
+            class: 'link-success' %></th>
+          <td><%= l(task.created_at, format: :short) %></td>
+          <td><%= link_to task.title, task_path(task), class: 'link-success' %></td>
+          <td><%= link_to task.author.full_name, user_path(task.author), class: 'link-dark' %></td>
+          <td><%= task.status.upcase %></td>
+          <td><%= l(task.updated_at, format: :short) %></td>
+        </tr>
+      <% end %>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
 </div>

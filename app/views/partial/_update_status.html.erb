@@ -1,0 +1,7 @@
+<% if task.created? %>
+  <%= button_to 'Take to work', update_status_task_path(task), class: 'btn btn-info btn-sm', method: :put %>
+<% elsif task.started? %>
+  <%= button_to 'Complete task', update_status_task_path(task), class: 'btn btn-success btn-sm', method: :put %>
+<% elsif task.finished? %>
+  <%= button_to 'Completed', '#', class: 'btn btn-sm btn-success', disabled: true, method: :put %>
+<% end %>
