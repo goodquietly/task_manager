@@ -5,7 +5,8 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 35 }
   validates :surname, presence: true, length: { maximum: 35 }
 
-  has_many :tasks, dependent: :destroy
+  has_many :task_users, class_name: 'Task', foreign_key: 'user_id', dependent: :destroy
+  has_many :task_authors, class_name: 'Task', foreign_key: 'author_id', dependent: :destroy
 
   def full_name
     "#{name} #{surname}"

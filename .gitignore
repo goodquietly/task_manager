@@ -29,3 +29,4 @@
 
 /node_modules
 .byebug_history
+/public/system/lets/letter_avatars/*
