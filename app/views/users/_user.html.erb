@@ -1,5 +1,5 @@
 <div class="card d-grid gap-2 col-8 mx-auto text-center">
-  <img src="https://ru.gravatar.com/userimage/222017186/cb8c99aad0f763114188d1d4a5d5c629.png?size=200" class="card-img-top" alt="...">
+  <%= letter_avatar_tag(@user.surname, 300, class: 'card-img-top') %>
   <div class="card-body">
     <h5 class="card-title"><%= @user.full_name %></h5>
     <p class="card-text"><%= @user.email %></p>

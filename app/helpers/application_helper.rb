@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include LetterAvatar::AvatarHelper
+
   def table_tr_color(status)
     case status
     when 'created' then 'warning'
