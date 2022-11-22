@@ -1,8 +1,12 @@
 <div class="card text-center">
   <div class="card-header"><b>Task: <%= task.title.upcase %> </b></div>
   <div class="card-body">
-    <%= button_to "Destroy this task", task, class: 'btn btn-secondary my-2', 
-      form: { data: { turbo_confirm: 'Are you sure?' } }, method: :delete %>
+
+    <% if policy(task).destroy? %> 
+      <%= button_to "Destroy this task", task, class: 'btn btn-secondary my-2', 
+        form: { data: { turbo_confirm: 'Are you sure?' } }, method: :delete %>
+    <% end %>
+
     <h5 class="card-title"><b>For user </b><%= link_to task.user.full_name, user_path(task.user), 
       class: 'link-success' %></h5>
     <p class="card-text"><b>Сreated by: </b><%= link_to task.author.full_name, 
@@ -10,7 +14,9 @@
     <p class="card-text"><b>Date of creation: </b><%= l(task.created_at, format: :long) %></p>
     <p class="card-text"><b>Status: </b><%= task.status.upcase %></p>
 
-    <%= render 'partial/update_status', task: task %>
+    <% if policy(task).update_status? %> 
+      <%= render 'partial/update_status', task: task %>
+    <% end %>
 
   </div>
   <div class="card-footer text-muted">

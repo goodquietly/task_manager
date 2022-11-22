@@ -30,7 +30,11 @@
       <td><%= task.status.upcase %></td>
       <td>
 
-        <%= render 'partial/update_status', task: task %>
+        <% if policy(task).update_status? %>
+          <%= render 'partial/update_status', task: task %>
+        <% else %>
+          <%= button_to 'Unavailable', '#', class: 'btn btn-sm btn-secondary', disabled: true, method: :put %>  
+        <% end %>
 
       </td>
     </tr>
