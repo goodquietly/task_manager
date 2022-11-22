@@ -2,8 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy update_status]
 
   def index
-    @tasks = Task.all
-    @users = User.all
+    @tasks = policy_scope(Task)
+    @users = policy_scope(User)
   end
 
   def show
@@ -13,7 +13,7 @@ class TasksController < ApplicationController
 
   def new
     @user = User.find(params[:id])
-    @task = Task.new(user: @user)
+    @task = authorize Task.new(user: @user)
   end
 
   def edit; end
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   def create
     task_params = params.require(:task).permit(:title, :user_id)
 
-    @task = Task.new(task_params)
+    @task = authorize Task.new(task_params)
 
     @task.author = current_user
 
@@ -72,6 +72,6 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = authorize Task.find(params[:id])
   end
 end
