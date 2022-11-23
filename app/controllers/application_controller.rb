@@ -5,14 +5,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  private
-
-  def user_not_authorized
-    flash[:alert] = 'You are not authorized to perform this action.'
-
-    redirect_to(request.referrer || root_path || new_user_session_path)
-  end
-
   def after_sign_out_path_for(resource_or_scope)
     scope = Devise::Mapping.find_scope!(resource_or_scope)
     router_name = Devise.mappings[scope].router_name
@@ -25,5 +17,19 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name surname])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[name surname])
+  end
+
+  private
+
+  def user_not_authorized
+    flash[:alert] = 'You are not authorized to perform this action.'
+
+    if request.referrer.present?
+      redirect_to(request.referrer)
+    elsif current_user.present?
+      redirect_to(root_path)
+    else
+      redirect_to(new_user_session_path)
+    end
   end
 end
