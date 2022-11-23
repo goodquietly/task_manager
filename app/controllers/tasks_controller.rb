@@ -26,6 +26,7 @@ class TasksController < ApplicationController
     @task.author = current_user
 
     if @task.save
+      TaskMailer.new_task(@task).deliver_now
 
       redirect_to task_path(@task), notice: 'Задача успешно создана!'
     else
@@ -43,6 +44,8 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       @task.created!
 
+      TaskMailer.new_task(@task).deliver_now
+
       redirect_to task_path(@task), notice: 'Задача успешно обновлена!'
     else
       flash.now[:alert] = 'Вы неправильно заполнили поле Title'
@@ -59,6 +62,8 @@ class TasksController < ApplicationController
     else
       @task.finished!
     end
+
+    TaskMailer.update_status(@task).deliver_now
 
     redirect_to user_path, notice: 'Статус задачи изменен!'
   end

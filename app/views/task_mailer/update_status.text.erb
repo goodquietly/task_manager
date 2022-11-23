@@ -1,0 +1,12 @@
+<% if @task.finished? %>
+  Your task is done!
+<% else %>    
+  Your task status has been updated!
+<% end %>
+
+<%= @task.title %>
+Executor: <%= @task.user.full_name %>
+----
+Task: <%= @task.title %>
+Updated at: <%= l(@task.updated_at, format: :short) %>
+Сurrent status: <%= @task.status.upcase %>

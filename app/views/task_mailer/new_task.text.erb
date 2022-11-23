@@ -1,0 +1,7 @@
+New task!
+<%= @task.title %>
+Created by: <%= @task.author.full_name %>
+----
+Task: <%= @task.title %>
+Created at: <%= l(@task.created_at, format: :short) %>
+Сurrent status: <%= @task.status.upcase %>

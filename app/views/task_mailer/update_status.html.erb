@@ -1,0 +1,22 @@
+<% if @task.finished? %>
+  <h1>Your task is done!</h1>
+<% else %>    
+  <h1>Your task status has been updated!</h1>
+<% end %>
+
+  <h5><%= @task.title %></h5>
+  <h5>Executor: 
+    <strong>
+        <%= link_to @task.user.full_name, user_url(@task.user) %>
+    </strong>
+  </h5>
+
+  <hr/>
+
+  <h3>Task:</h3>
+  <h4><strong><%= link_to @task.title, task_url(@task) %></strong>
+  </h4>
+  <h3>Updated at:</h3>
+  <h4 class="text-success"><%= l(@task.updated_at, format: :short) %></h4>
+  <h3>Сurrent status:</h3>
+  <h4 class="text-success"><%= @task.status.upcase %></h4>
