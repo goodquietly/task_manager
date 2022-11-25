@@ -33,9 +33,9 @@ RSpec.describe User, type: :model do
     end
   end
 
-  let(:user) { FactoryBot.create(:user) }
-
   describe '#full_name' do
+    let(:user) { create(:user) }
+
     it 'returns correctly written full name' do
       expect(user.full_name).to eq "#{user.name} #{user.surname}"
     end
