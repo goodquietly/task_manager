@@ -58,14 +58,6 @@ RSpec.describe UsersController, type: :controller do
         expect(flash[:alert]).not_to be
       end
 
-      it 'should rendered partial _user on template show' do
-        should render_template(partial: '_user', locals: { user: user })
-      end
-
-      it 'should rendered partial tasks/_form on template show' do
-        should render_template(partial: 'tasks/_form', locals: { task: task })
-      end
-
       it 'should rendered with layout application' do
         should render_with_layout('application')
       end

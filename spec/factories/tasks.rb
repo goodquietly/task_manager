@@ -3,6 +3,6 @@ FactoryBot.define do
     association :user, factory: :user
     association :author, factory: :user
 
-    title { Faker::String.random(length: 1..35) }
+    title { "Cook #{Faker::Dessert.variety}" }
   end
 end
