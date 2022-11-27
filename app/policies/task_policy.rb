@@ -20,14 +20,14 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def update?
-    user == record.author
+    user == record.author && !record.finished?
   end
 
   def update_status?
-    user == record.user
+    user == record.user && !record.finished?
   end
 
   def destroy?
-    update?
+    user == record.user && !record.finished?
   end
 end

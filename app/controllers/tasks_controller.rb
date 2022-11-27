@@ -12,8 +12,12 @@ class TasksController < ApplicationController
   end
 
   def new
+    authorize Task
+
     @user = User.find(params[:id])
-    @task = authorize Task.new(user: @user)
+    @task = Task.new(user: @user)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'The user with the given ID does not exist! Choose another.'
   end
 
   def edit; end
@@ -28,17 +32,15 @@ class TasksController < ApplicationController
     if @task.save
       TaskMailer.new_task(@task).deliver_now
 
-      redirect_to task_path(@task), notice: 'Задача успешно создана!'
+      redirect_to task_path(@task), notice: 'Task successfully created!'
     else
-      flash.now[:alert] = 'Вы неправильно заполнили поле Title'
+      flash.now[:alert] = 'You filled in the Title field incorrectly'
 
       render :new
     end
   end
 
   def update
-    return redirect_to task_path, alert: 'Задача выполнена, eё нельзя изменить.' if @task.finished?
-
     task_params = params.require(:task).permit(:title, :user_id)
 
     if @task.update(task_params)
@@ -46,17 +48,15 @@ class TasksController < ApplicationController
 
       TaskMailer.new_task(@task).deliver_now
 
-      redirect_to task_path(@task), notice: 'Задача успешно обновлена!'
+      redirect_to task_path(@task), notice: 'The task has been successfully updated!'
     else
-      flash.now[:alert] = 'Вы неправильно заполнили поле Title'
+      flash.now[:alert] = 'You filled in the Title field incorrectly.'
 
       render :edit
     end
   end
 
   def update_status
-    return redirect_to user_path, alert: 'Задача уже выполнена!' if @task.finished?
-
     if @task.created?
       @task.started!
     else
@@ -65,18 +65,24 @@ class TasksController < ApplicationController
 
     TaskMailer.update_status(@task).deliver_now
 
-    redirect_to user_path, notice: 'Статус задачи изменен!'
+    redirect_to task_path, notice: 'Task status changed!'
   end
 
   def destroy
+    task_info = @task
+
     @task.destroy
 
-    redirect_to root_path, notice: 'Задача успешно удалена.'
+    TaskMailer.destroy_task(task_info).deliver_now
+
+    redirect_to root_path, notice: 'The task was successfully deleted.'
   end
 
   private
 
   def set_task
     @task = authorize Task.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'The task with the given ID does not exist! Choose another.'
   end
 end
