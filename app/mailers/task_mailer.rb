@@ -10,4 +10,10 @@ class TaskMailer < ApplicationMailer
 
     bootstrap_mail to: task.author.email
   end
+
+  def destroy_task(task)
+    @task = task
+
+    bootstrap_mail to: task.user.email
+  end
 end

@@ -1,0 +1,20 @@
+  <h1>Your task has been deleted by the creator.</h1>
+  <h5><%= @task.title %></h5>
+  <h5>Created by: 
+    <strong>
+        <%= link_to @task.author.full_name, user_url(@task.author) %>
+    </strong>
+  </h5>
+
+  <hr/>
+
+  <h3>Task:</h3>
+  <h4><strong><%= @task.title %></strong>
+  </h4>
+  <h3>Created at:</h3>
+  <h4 class="text-success"><%= l(@task.created_at, format: :short) %></h4>
+  <h3>Last update:</h3>
+  <h4 class="text-success"><%= l(@task.updated_at, format: :short) %></h4>
+  <h3>Last status:</h3>
+  <h4 class="text-success"><%= @task.status.upcase %></h4>
+  

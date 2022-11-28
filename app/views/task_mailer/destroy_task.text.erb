@@ -1,0 +1,8 @@
+Your task has been deleted by the creator.
+<%= @task.title %>
+Created by: <%= @task.author.full_name %>
+----
+Task: <%= @task.title %>
+Created at: <%= l(@task.created_at, format: :short) %>
+Updated at: <%= l(@task.updated_at, format: :short) %>
+Last status: <%= @task.status.upcase %>
