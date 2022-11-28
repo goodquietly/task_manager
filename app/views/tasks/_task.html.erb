@@ -15,7 +15,7 @@
     <p class="card-text"><b>Status: </b><%= task.status.upcase %></p>
 
     <% if policy(task).update_status? %> 
-      <%= render 'partial/update_status', task: task %>
+      <%= render 'partials/update_status', task: task %>
     <% end %>
 
   </div>

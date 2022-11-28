@@ -6,6 +6,7 @@
     <%= form.hidden_field :user_id %>
 
     <div class="d-grid gap-2 col-8 mx-auto my-3 text-center mt-5">
+        <%= render partial: 'partials/form_errors', locals: {model: task} %>
         <%= form.label :title, 'Task title', class: 'form-label', for: 'exampleFormControlTextarea1' %>
         <%= form.text_area :title, rows: 5, class: 'form-control', id: 'exampleFormControlTextarea1' %>
     </div>

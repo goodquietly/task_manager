@@ -1,8 +1,7 @@
+<%= render "form", task: @task %>
+
 <div class="my-5 d-flex justify-content-center text-center">
   <div>
-
-    <%= render "form", task: @task %>
-
     <%= button_to "Show this task", @task, class: 'btn btn-info my-3', method: :get %>
     <%= button_to "Back to tasks", tasks_path, class: 'btn btn-info', method: :get %>
   </div>

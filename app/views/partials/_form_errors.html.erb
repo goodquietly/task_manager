@@ -1,0 +1,15 @@
+<% errors = model.errors %>
+
+<% if errors.any? %>
+  <div class="alert alert-warning alert-dismissible fade show fs-5" role="alert" id="error_explanation">
+    <h2 class="alert-heading"><%= t('app.errors', count: errors.count) %></h2>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <hr>
+    <ul class="mb-0">
+      <% errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+

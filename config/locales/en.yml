@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  app:
+    errors:
+      one: 'There is %{count} error in your form'
+      other: 'There are %{count} errors in your form'
