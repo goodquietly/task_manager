@@ -16,8 +16,6 @@ class TasksController < ApplicationController
 
     @user = User.find(params[:id])
     @task = Task.new(user: @user)
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: 'The user with the given ID does not exist! Choose another.'
   end
 
   def edit; end
@@ -82,7 +80,5 @@ class TasksController < ApplicationController
 
   def set_task
     @task = authorize Task.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: 'The task with the given ID does not exist! Choose another.'
   end
 end

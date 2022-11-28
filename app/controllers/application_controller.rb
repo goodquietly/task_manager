@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def after_sign_out_path_for(resource_or_scope)
     scope = Devise::Mapping.find_scope!(resource_or_scope)
@@ -20,6 +21,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def record_not_found
+    return user_not_authorized unless current_user.present?
+
+    redirect_to root_path, alert: "The #{controller_path} with the given ID does not exist! Choose another."
+  end
 
   def user_not_authorized
     flash[:alert] = 'You are not allowed to perform this action.'
