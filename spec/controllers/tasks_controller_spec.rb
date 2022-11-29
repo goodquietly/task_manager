@@ -4,12 +4,6 @@ RSpec.describe TasksController, type: :controller do
   let(:task) { create(:task) }
   let(:user) { create(:user) }
 
-  describe '#set_task' do
-    it 'should use before_action' do
-      should use_before_action(:set_task)
-    end
-  end
-
   describe '#index' do
     it 'should route get to tasks#index' do
       should route(:get, '/tasks').to(action: :index)
@@ -37,11 +31,7 @@ RSpec.describe TasksController, type: :controller do
       end
 
       it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
-      it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -103,12 +93,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
-      it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+      it 'it must be flash alert with content' do
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -133,12 +119,8 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(root_path)
         end
 
-        it "it shouldn't be an flash alert" do
-          expect(flash[:alert]).to be
-        end
-
-        it 'should be flash with content' do
-          should set_flash.to('The task with the given ID does not exist! Choose another.')
+        it "it shouldn't be an flash alert with content" do
+          should set_flash[:alert].to('The tasks with the given ID does not exist! Choose another.')
         end
       end
 
@@ -189,12 +171,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
-      it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+      it 'it must be flash alert with content' do
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -236,12 +214,8 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(root_path)
         end
 
-        it 'it must be flash alert' do
-          expect(flash[:alert]).to be
-        end
-
-        it 'should be flash with content' do
-          should set_flash.to('The user with the given ID does not exist! Choose another.')
+        it 'it must be flash alert with content' do
+          should set_flash[:alert].to('The tasks with the given ID does not exist! Choose another.')
         end
       end
     end
@@ -265,12 +239,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
-      it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+      it 'it must be flash alert with content' do
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -293,16 +263,14 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(task_path(new_task.ids))
         end
 
-        it 'it must be flash notice' do
-          expect(flash[:notice]).to be
+        it 'it must be flash notice with content' do
+          should set_flash[:notice].to('Task successfully created!')
         end
 
-        it 'should be flash with content' do
-          should set_flash.to('Task successfully created!')
-        end
-
-        it 'should rendered with layout mailer' do
-          should render_with_layout('mailer')
+        it 'sending email should be queued' do
+          ActiveJob::Base.queue_adapter = :test
+          expect { TaskMailer.new_task.deliver_later }
+            .to have_enqueued_mail(TaskMailer, :new_task)
         end
       end
 
@@ -318,14 +286,6 @@ RSpec.describe TasksController, type: :controller do
 
         it 'should be rendered new template' do
           expect(response).to render_template(:new)
-        end
-
-        it 'it must be flash alert' do
-          expect(flash[:alert]).to be
-        end
-
-        it 'should be flash now with content' do
-          should set_flash.now.to('You filled in the Title field incorrectly')
         end
 
         it 'should rendered with layout application' do
@@ -357,12 +317,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
-      it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+      it 'it must be flash alert with content' do
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -387,12 +343,8 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(root_path)
         end
 
-        it "it shouldn't be an flash alert" do
-          expect(flash[:alert]).to be
-        end
-
-        it 'should be flash with content' do
-          should set_flash.to('The task with the given ID does not exist! Choose another.')
+        it "it shouldn't be an flash alert with content" do
+          should set_flash[:alert].to('The tasks with the given ID does not exist! Choose another.')
         end
       end
 
@@ -415,12 +367,8 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
 
-          it 'it must be flash alert' do
-            expect(flash[:alert]).to be
-          end
-
-          it 'should be flash with content' do
-            should set_flash.to('You are not allowed to perform this action.')
+          it 'it must be flash alert with content' do
+            should set_flash[:alert].to('You are not allowed to perform this action.')
           end
         end
 
@@ -470,12 +418,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
-      it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+      it 'it must be flash alert with content' do
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -500,12 +444,8 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(root_path)
         end
 
-        it "it shouldn't be an flash alert" do
-          expect(flash[:alert]).to be
-        end
-
-        it 'should be flash with content' do
-          should set_flash.to('The task with the given ID does not exist! Choose another.')
+        it "it shouldn't be an flash alert with content" do
+          should set_flash[:alert].to('The tasks with the given ID does not exist! Choose another.')
         end
       end
 
@@ -528,12 +468,8 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
 
-          it 'it must be flash alert' do
-            expect(flash[:alert]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('You are not allowed to perform this action.')
+            should set_flash[:alert].to('You are not allowed to perform this action.')
           end
         end
 
@@ -556,16 +492,14 @@ RSpec.describe TasksController, type: :controller do
               expect(response).to redirect_to(task_path(task_with_author))
             end
 
-            it 'it must be flash notice' do
-              expect(flash[:notice]).to be
-            end
-
             it 'should be flash with content' do
-              should set_flash.to('The task has been successfully updated!')
+              should set_flash[:notice].to('The task has been successfully updated!')
             end
 
-            it 'should rendered with layout mailer' do
-              should render_with_layout('mailer')
+            it 'sending email should be queued' do
+              ActiveJob::Base.queue_adapter = :test
+              expect { TaskMailer.new_task(task_with_author).deliver_later }
+                .to have_enqueued_mail(TaskMailer, :new_task).with(task_with_author)
             end
           end
 
@@ -585,14 +519,6 @@ RSpec.describe TasksController, type: :controller do
 
             it 'should be rendered edit template' do
               expect(response).to render_template(:edit)
-            end
-
-            it 'it must be flash alert' do
-              expect(flash[:alert]).to be
-            end
-
-            it 'should be flash now with content' do
-              should set_flash.now.to('You filled in the Title field incorrectly.')
             end
 
             it 'should rendered with layout application' do
@@ -623,12 +549,8 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
 
-          it 'it must be flash alert' do
-            expect(flash[:alert]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('You are not allowed to perform this action.')
+            should set_flash[:alert].to('You are not allowed to perform this action.')
           end
         end
       end
@@ -653,12 +575,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
       it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -679,12 +597,8 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(root_path)
         end
 
-        it "it shouldn't be an flash alert" do
-          expect(flash[:alert]).to be
-        end
-
         it 'should be flash with content' do
-          should set_flash.to('The task with the given ID does not exist! Choose another.')
+          should set_flash[:alert].to('The tasks with the given ID does not exist! Choose another.')
         end
       end
 
@@ -703,12 +617,8 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
 
-          it 'it must be flash alert' do
-            expect(flash[:alert]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('You are not allowed to perform this action.')
+            should set_flash[:alert].to('You are not allowed to perform this action.')
           end
         end
 
@@ -733,12 +643,8 @@ RSpec.describe TasksController, type: :controller do
               expect(response).to redirect_to(root_path)
             end
 
-            it 'it must be flash alert' do
-              expect(flash[:alert]).to be
-            end
-
             it 'should be flash with content' do
-              should set_flash.to('You are not allowed to perform this action.')
+              should set_flash[:alert].to('You are not allowed to perform this action.')
             end
           end
 
@@ -758,16 +664,14 @@ RSpec.describe TasksController, type: :controller do
               expect(response).to redirect_to(root_path)
             end
 
-            it 'it must be flash notice' do
-              expect(flash[:notice]).to be
-            end
-
             it 'should be flash with content' do
-              should set_flash.to('The task was successfully deleted.')
+              should set_flash[:notice].to('The task was successfully deleted.')
             end
 
-            it 'should rendered with layout mailer' do
-              should render_with_layout('mailer')
+            it 'sending email should be queued' do
+              ActiveJob::Base.queue_adapter = :test
+              expect { TaskMailer.destroy_task.deliver_later }
+                .to have_enqueued_mail(TaskMailer, :destroy_task)
             end
           end
         end
@@ -793,12 +697,8 @@ RSpec.describe TasksController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'it must be flash alert' do
-        expect(flash[:alert]).to be
-      end
-
       it 'should be flash with content' do
-        should set_flash.to('You are not allowed to perform this action.')
+        should set_flash[:alert].to('You are not allowed to perform this action.')
       end
     end
 
@@ -819,12 +719,8 @@ RSpec.describe TasksController, type: :controller do
           expect(response).to redirect_to(root_path)
         end
 
-        it "it shouldn't be an flash alert" do
-          expect(flash[:alert]).to be
-        end
-
         it 'should be flash with content' do
-          should set_flash.to('The task with the given ID does not exist! Choose another.')
+          should set_flash[:alert].to('The tasks with the given ID does not exist! Choose another.')
         end
       end
 
@@ -843,17 +739,13 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
 
-          it 'it must be flash alert' do
-            expect(flash[:alert]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('You are not allowed to perform this action.')
+            should set_flash[:alert].to('You are not allowed to perform this action.')
           end
         end
 
         context 'when the user is the executor of the task and task status created' do
-          let(:task_with_executor) { create(:task, user_id: user.id) }
+          let(:task_with_executor) { create(:task, user_id: user.id, status: :created) }
 
           before do
             sign_in user
@@ -868,16 +760,14 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(task_path(task_with_executor))
           end
 
-          it 'it must be flash notice' do
-            expect(flash[:notice]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('Task status changed!')
+            should set_flash[:notice].to('Task status changed!')
           end
 
-          it 'should rendered with layout mailer' do
-            should render_with_layout('mailer')
+          it 'sending email should be queued' do
+            ActiveJob::Base.queue_adapter = :test
+            expect { TaskMailer.update_status(task_with_executor).deliver_later }
+              .to have_enqueued_mail(TaskMailer, :update_status).with(task_with_executor)
           end
         end
 
@@ -897,16 +787,14 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(task_path(task_with_executor))
           end
 
-          it 'it must be flash notice' do
-            expect(flash[:notice]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('Task status changed!')
+            should set_flash[:notice].to('Task status changed!')
           end
 
-          it 'should rendered with layout mailer' do
-            should render_with_layout('mailer')
+          it 'sending email should be queued' do
+            ActiveJob::Base.queue_adapter = :test
+            expect { TaskMailer.update_status(task_with_executor).deliver_later }
+              .to have_enqueued_mail(TaskMailer, :update_status).with(task_with_executor)
           end
         end
 
@@ -930,12 +818,8 @@ RSpec.describe TasksController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
 
-          it 'it must be flash alert' do
-            expect(flash[:alert]).to be
-          end
-
           it 'should be flash with content' do
-            should set_flash.to('You are not allowed to perform this action.')
+            should set_flash[:alert].to('You are not allowed to perform this action.')
           end
         end
       end
