@@ -1,53 +1,94 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<section class="text-center text-lg-start">
+  <style>
+    .cascading-right {
+      margin-right: -50px;
+    }
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-    
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+    @media (max-width: 991.98px) {
+      .cascading-right {
+        margin-right: 0;
+      }
+    }
+  </style>
+
+  <div class="container py-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="card cascading-right" style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+            ">
+          <div class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Edit <%= resource_name.to_s.humanize %></h2>
+
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), 
+              html: { method: :put }) do |f| %>
+              <%= render "devise/shared/error_messages", resource: resource %>
+
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-floating mb-3">
+                  <%= f.text_field :name, autofocus: true, autocomplete: "First name", 
+                      placeholder: 'First name', id: "floatingInput", class: "form-control" %>
+                  <%= f.label :name, for: "floatingInput" %>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating mb-3">
+                  <%= f.text_field :surname, autofocus: true, autocomplete: "Last name", 
+                      placeholder: 'Last name', id: "floatingInput", class: "form-control" %>
+                  <%= f.label :surname, for: "floatingInput" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+                  placeholder: 'Enter email', id: "floatingInput", class: "form-control" %>
+              <%= f.label :email, for: "floatingInput" %>
+            </div>
+
+            <div class="form-floating mb-3">              
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", 
+                   id: "floatingPassword", placeholder: 'Password (6 characters minimum)' %>
+                   <%= f.label :password, for: "floatingPassword" %>                   
+            </div>
+
+            <div class="form-floating mb-3">
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", 
+                class: "form-control", id: "floatingPassword", 
+                placeholder: 'Password (6 characters minimum)' %>
+              <%= f.label :password_confirmation, for: "floatingPassword" %>
+            </div>
+
+            <div class="form-floating mb-3">
+              <%= f.password_field :current_password, class: "form-control", id: "floatingPassword", 
+                  placeholder: 'Enter password' %>
+              <%= f.label :current_password, for: "floatingPassword" %>
+            </div>
+
+            <div class='d-grid gap-2'>
+              <%= f.submit 'Update', class: 'btn btn-secondary btn-block mb-4' %>
+            </div>
+            <% end %>
+
+            <h3>Cancel my account</h3>
+            <p>Unhappy?</p>
+            <div class='d-grid gap-2'>
+              <%= link_to "Cancel my account", registration_path(resource_name), 
+                class: "btn btn-secondary btn-block mb-4", 
+                data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+              <%= link_to "Back", :back, class: "btn btn-primary btn-block mb-4"     %> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" 
+          class="w-100 rounded-4 shadow-4" alt="" />
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :surname %><br />
-    <%= f.text_field :surname, autofocus: true, autocomplete: "surname" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), form: { data: { turbo_confirm: 'Are you sure?' } }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</section>
