@@ -2,39 +2,30 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.1"
-gem "rails", "~> 7.0.3"
-gem "sprockets-rails"
+
+gem "bootsnap", require: false
+gem 'bootstrap-email'
+gem "cssbundling-rails"
+gem 'devise'
+gem "jbuilder"
+gem "jsbundling-rails"
+gem 'letter_avatar'
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
-gem "jsbundling-rails"
-gem "turbo-rails"
-gem "stimulus-rails"
-gem "cssbundling-rails"
-gem "jbuilder"
-gem 'devise'
-gem 'letter_avatar'
 gem 'pundit'
-gem 'bootstrap-email'
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
-
+gem "rails", "~> 7.0.3"
+gem 'rubocop', '~> 1.39', require: false
+gem "sprockets-rails"
+gem "stimulus-rails"
+gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-gem "bootsnap", require: false
-
-# Use Sass to process CSS
-# gem "sassc-rails"
 
 group :development, :test do
-  gem "letter_opener"
   gem 'byebug'
-  gem 'rspec-rails', '~> 6.0.0'
   gem "factory_bot_rails"
   gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main'
-  gem 'shoulda-matchers', '~> 5.0'
   gem 'rails-controller-testing'
+  gem 'rspec-rails', '~> 6.0.0'
   gem 'simplecov', require: false
+  gem 'shoulda-matchers', '~> 5.0'
 end
